@@ -1,28 +1,25 @@
-const USER_ID = '10081987'
-
+import { storageService } from "../services/storage.service"
 
 export const cartAPI = {
-    getUserCart,
-    addProductToUserCart,
+    getCart,
+    addToCart,
     deleteCart
 }
 
 
-async function getUserCart() {
-    fetch(`https://fakestoreapi.com/carts/user/${USER_ID}`)
-        .then(res => res.json())
-        .then(json => {
-            console.log('getUserCart', json)
-            return json
-        })
+async function getCart() {
+        console.log('getCart at Cart service')
+        const cartItems = await storageService.query('cartProducts')
+        return cartItems || []
 }
 
-async function addProductToUserCart(productId) {
-    fetch('https://fakestoreapi.com/carts', {
+async function addToCart(productId) {
+
+    return fetch(`https://fakestoreapi.com/carts/`, {
         method: "POST",
         body: JSON.stringify(
             {
-                userId: USER_ID,
+                userId: 1,
                 date: '2021 - 06 - 12',
                 products: [{ productId, quantity: 1 }]
             }

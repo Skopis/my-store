@@ -1,8 +1,8 @@
 
 
-const cartReducer = (state = [], action) => {
+const pageNumReducer = (state = 0, action) => {
     switch (action.type) {
-        case 'GET_CART':
+        case 'SET_PAGE_NUM':
             return action.payload;
 
         default:
@@ -10,4 +10,4 @@ const cartReducer = (state = [], action) => {
     }
 };
 
-export default cartReducer;
+export default pageNumReducer;

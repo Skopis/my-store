@@ -1,8 +1,8 @@
 
 
-const categoriesReducer = (state = [], action) => {
+const categoryReducer = (state = 'none', action) => {
     switch (action.type) {
-        case 'GET_CATEGORIES':
+        case 'SET_CATEGORY':
             return action.payload;
             
         default:
@@ -10,4 +10,4 @@ const categoriesReducer = (state = [], action) => {
     }
 };
 
-export default categoriesReducer;
+export default categoryReducer;

@@ -1,8 +1,8 @@
 
 
-const cartReducer = (state = [], action) => {
+const addToCartReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'GET_CART':
+        case 'ADD_TO_CART':
             return action.payload;
 
         default:
@@ -10,4 +10,4 @@ const cartReducer = (state = [], action) => {
     }
 };
 
-export default cartReducer;
+export default addToCartReducer;

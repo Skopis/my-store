@@ -1,11 +1,14 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import { getCategories } from '../store/actions/index';
+import { setCategory } from '../store/actions/index';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,32 +25,44 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function SimpleSelect() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        console.log('useEffect for App')
+        dispatch(getCategories())
+    }, [])
+    const categories = useSelector((state: any) => state.categories)
+    const selectedCategory = useSelector((state: any) => state.selectedCategory)
     const classes = useStyles();
-    const [category, setCategory] = React.useState('');
+    // const [category, setCategory] = React.useState('');
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setCategory(event.target.value as string);
+        console.log('event.target.value', event.target.value)
+        dispatch(setCategory(event.target.value as string))
+        // setCategory(event.target.value as string);
     };
+    // console.log('categories', categories)
+
 
     return (
         <div>
-            <FormControl className={classes.formControl}>
+            {categories && categories.length && <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
                 <Select
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
-                    value={category}
+                    value={selectedCategory}
                     onChange={handleChange}
                 >
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    <MenuItem value={'food'}>Food</MenuItem>
-                    <MenuItem value={'clothing'}>Clothing</MenuItem>
-                    <MenuItem value={'pharm'}>Pharm</MenuItem>
+                    {categories.map((category: string) => {
+                        return <MenuItem key={category} value={category}>{category} </MenuItem>
+                    })}
+
                 </Select>
                 <FormHelperText>Choose a Category you're interested in</FormHelperText>
-            </FormControl>
+            </FormControl>}
         </div>
     );
 }

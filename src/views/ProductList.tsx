@@ -1,4 +1,10 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react';
+//actions
+import { getProductList } from '../store/actions/index'
+import { addToCart } from '../store/actions/index'
+//metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,9 +14,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import Paper from '@material-ui/core/Paper';
-import BasicPagination from '../cmps/BasicPagination';
 import Container from '@material-ui/core/Container';
+//cmps
+import BasicPagination from '../cmps/BasicPagination';
 import Filter from '../cmps/Filter';
+
 
 
 const useStyles = makeStyles({
@@ -20,24 +28,36 @@ const useStyles = makeStyles({
 });
 
 
-interface Props {
-    products: {
-        id: string,
-        title: string,
-        price: string,
-        category: string,
-        description: string,
-        image: string
-    }[];
+interface productObj {
+    id: number,
+    title: string,
+    price: number,
+    category: string,
+    description: string,
+    image: string
 }
 
-const ProductList: React.FC<Props> = ({ products }) => {
+
+const ProductList: React.FC = () => {
+    const dispatch = useDispatch()
+    const selectedCategory = useSelector((state: any) => state.selectedCategory)
+    const currentPageNum = useSelector((state: any) => state.currentPageNum)
+    const productsPerPage = 5;
+
+    useEffect(() => {
+        console.log('useEffect for App')
+        dispatch(getProductList(selectedCategory))
+    }, [selectedCategory])
+    const products = useSelector((state: any) => state.productList)
+    const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
+
+    // console.log('selectedCategory at ProductList', selectedCategory)
     console.log('products', products)
     const classes = useStyles();
     return (
         <Container fixed>
             <Filter />
-            {products && products.length && <TableContainer component={Paper}>
+            {productsForDisplay && productsForDisplay.length && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -48,7 +68,7 @@ const ProductList: React.FC<Props> = ({ products }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {products.map((product) => (
+                        {productsForDisplay.map((product: productObj) => (
                             <TableRow key={product.id}>
                                 <TableCell component="th" scope="row">
                                     {product.title}
@@ -56,14 +76,14 @@ const ProductList: React.FC<Props> = ({ products }) => {
                                 <TableCell align="right">{product.price}</TableCell>
                                 <TableCell align="right"><img className="product-img" src={product.image} alt="" /></TableCell>
                                 <TableCell align="right">
-                                    <AddShoppingCartIcon />
+                                    <AddShoppingCartIcon onClick={() => dispatch(addToCart(product.id))} />
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>}
-            <BasicPagination />
+            <BasicPagination productsLength={products.length} />
         </Container>
     );
 }

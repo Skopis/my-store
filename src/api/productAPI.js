@@ -9,26 +9,32 @@ export const productAPI = {
 }
 
 
-async function query() {
-    const productList = await storageService.query('productList')
+async function query(selectedCategory = 'none') {
+    if (selectedCategory === 'none') {
+        console.log('selectedCategory at API service', selectedCategory)
+        const productList = await storageService.query('productList')
 
-    if (!productList || !productList.length) {
-        console.log('getting from API')
-        return fetch('https://fakestoreapi.com/products')
-            .then(res => res.json())
-            .then(json => {
-                console.log('query() on productAPI', json)
-                storageService.saveToStorage('productList', json)
-                return json
-            })
+        if (!productList || !productList.length) {
+            console.log('getting from API')
+            return fetch('https://fakestoreapi.com/products')
+                .then(res => res.json())
+                .then(json => {
+                    // console.log('query() on productAPI', json)
+                    storageService.saveToStorage('productList', json)
+                    return json
+                })
+        }
+        console.log('getting from local storage')
+        return productList;
     }
-    console.log('getting from local storage')
-    return productList;
+    else {
+        return queryByCategory(selectedCategory);
+    }
 }
 
 
 function queryByCategory(category) {
-    fetch(`https://fakestoreapi.com/products/category/${category}`)
+    return fetch(`https://fakestoreapi.com/products/category/${category}`)
         .then(res => res.json())
         .then(json => {
             console.log(`queryByCategory ${category}`, json)
@@ -44,7 +50,7 @@ async function getCategories() {
         fetch('https://fakestoreapi.com/products/categories')
             .then(res => res.json())
             .then(json => {
-                console.log('getCategories', json)
+                // console.log('getCategories', json)
                 storageService.saveToStorage('categories', json)
                 return json
             })
