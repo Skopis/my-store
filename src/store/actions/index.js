@@ -1,6 +1,6 @@
 import { productAPI } from '../../api/productAPI'
 // import { cartAPI } from '../../api/cartAPI'
-import { storageService } from '../../services/storage.service';
+// import { storageService } from '../../services/storage.service';
 
 
 export const getProductList = () => async dispatch => {
