@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from 'react-redux'
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
@@ -7,16 +6,15 @@ interface Props {
     text: string;
 }
 
-const Cart: React.FC<Props> = ({text}) => {
-    const productList=useSelector((state: any)=>state.productList)
+const Cart: React.FC<Props> = ({ text }) => {
     return (
         <Container fixed>
             <div>Helo Cart</div>
             text: {text}
-            procuctList: {productList}
+            {/* procuctList: {productList} */}
 
             <Button variant="contained" color="primary">Check Out</Button>
-            
+
         </Container>
     )
 }

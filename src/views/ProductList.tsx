@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import BasicPagination from '../cmps/BasicPagination';
 import Container from '@material-ui/core/Container';
 import Filter from '../cmps/Filter';
-import { productAPI } from '../api/product'
+
 
 const useStyles = makeStyles({
     table: {
@@ -19,43 +19,42 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(title: string, price: number, thumbnail: string) {
-    return { title, price, thumbnail };
+
+interface Props {
+    products: {
+        id: string,
+        title: string,
+        price: string,
+        category: string,
+        description: string,
+        image: string
+    }[];
 }
 
-const rows = [
-    createData('Product1', 159, 'img1.jpg'),
-    createData('Product2', 237, 'img2.jpg'),
-    createData('Product3', 262, 'img3.jpg'),
-    createData('Product4', 305, 'img4.jpg'),
-    createData('Product5', 356, 'img5.jpg'),
-];
-
-const DataTable: React.FC = () => {
+const ProductList: React.FC<Props> = ({ products }) => {
+    console.log('products', products)
     const classes = useStyles();
-const res = productAPI.query()
     return (
         <Container fixed>
             <Filter />
-            <TableContainer component={Paper}>
+            {products && products.length && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Product title</TableCell>
                             <TableCell align="right">Price ($)</TableCell>
-                            <TableCell align="right">Image thumbnail
-                            </TableCell>
+                            <TableCell align="right">Image</TableCell>
                             <TableCell align="right">Add to cart</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.title}>
+                        {products.map((product) => (
+                            <TableRow key={product.id}>
                                 <TableCell component="th" scope="row">
-                                    {row.title}
+                                    {product.title}
                                 </TableCell>
-                                <TableCell align="right">{row.price}</TableCell>
-                                <TableCell align="right">{row.thumbnail}</TableCell>
+                                <TableCell align="right">{product.price}</TableCell>
+                                <TableCell align="right"><img className="product-img" src={product.image} alt="" /></TableCell>
                                 <TableCell align="right">
                                     <AddShoppingCartIcon />
                                 </TableCell>
@@ -63,10 +62,10 @@ const res = productAPI.query()
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            </TableContainer>}
             <BasicPagination />
         </Container>
     );
 }
 
-export default DataTable
+export default ProductList;

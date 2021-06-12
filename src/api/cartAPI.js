@@ -23,7 +23,7 @@ async function addProductToUserCart(productId) {
         body: JSON.stringify(
             {
                 userId: USER_ID,
-                date: 2021 - 06 - 12,
+                date: '2021 - 06 - 12',
                 products: [{ productId, quantity: 1 }]
             }
         )

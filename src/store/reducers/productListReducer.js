@@ -1,8 +1,8 @@
 
 
-const productReducer = (state = {}, action) => {
+const productListReducer = (state = [], action) => {
     switch (action.type) {
-        case 'GET_PRODUCT':
+        case 'GET_PRODUCT_LIST':
             return action.payload;
             
         default:
@@ -10,4 +10,4 @@ const productReducer = (state = {}, action) => {
     }
 };
 
-export default productReducer;
+export default productListReducer;

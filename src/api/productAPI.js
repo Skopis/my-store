@@ -9,10 +9,11 @@ export const productAPI = {
 
 
 async function query() {
-    fetch('https://fakestoreapi.com/products')
+    console.log('hi query() on productAPI')
+    return fetch('https://fakestoreapi.com/products')
         .then(res => res.json())
         .then(json => {
-            console.log('query', json)
+            console.log('query() on productAPI', json)
             return json
         })
 }
