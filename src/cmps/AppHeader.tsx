@@ -1,4 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getCart } from '../store/actions/index'
+//cmps
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,7 +18,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,21 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
-            },
-        },
-        search: {
-            position: 'relative',
-            borderRadius: theme.shape.borderRadius,
-            backgroundColor: fade(theme.palette.common.white, 0.15),
-            '&:hover': {
-                backgroundColor: fade(theme.palette.common.white, 0.25),
-            },
-            marginRight: theme.spacing(2),
-            marginLeft: 0,
-            width: '100%',
-            [theme.breakpoints.up('sm')]: {
-                marginLeft: theme.spacing(3),
-                width: 'auto',
             },
         },
         inputRoot: {
@@ -64,6 +53,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function PrimarySearchAppBar() {
+    const dispatch = useDispatch()
+    const cartItems = useSelector((state: any) => state.cartItems)
+    useEffect(() => {
+        console.log('useEffect for Cart')
+        dispatch(getCart())
+    }, [])
+
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -115,22 +111,17 @@ export default function PrimarySearchAppBar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
+
+            <Link className="link" to="/cart">
+                <MenuItem>
+                    <IconButton aria-label="show new notifications" color="inherit">
+                        <Badge badgeContent={cartItems.length} color="secondary">
+                            <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                    <p>Cart</p>
+                </MenuItem>
+            </Link>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     aria-label="account of current user"
@@ -164,7 +155,7 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Link className="link" to="/cart">
-                                <Badge badgeContent={17} color="secondary">
+                                <Badge badgeContent={cartItems.length} color="secondary">
                                     <ShoppingCartIcon />
                                 </Badge>
                             </Link>
