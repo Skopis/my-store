@@ -14,10 +14,10 @@ export const getProductList = (selectedCategory) => async (dispatch) => {
 }
 
 
-export const addToCart = (productId) => async (dispatch) => {
+export const addToCart = (product) => async (dispatch) => {
     console.log('hi addToCart on actions')
     try {
-        const productAdded = await cartAPI.addToCart(productId)
+        const productAdded = await cartAPI.addToCart(product)
         dispatch({ type: 'ADD_TO_CART', payload: productAdded });
     }
     catch (err) { console.log('Error with addToCart') }

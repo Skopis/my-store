@@ -23,7 +23,7 @@ import Filter from '../cmps/Filter';
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 650,
+        minWidth: 700,
     },
 });
 
@@ -76,7 +76,7 @@ const ProductList: React.FC = () => {
                                 <TableCell align="right">{product.price}</TableCell>
                                 <TableCell align="right"><img className="product-img" src={product.image} alt="" /></TableCell>
                                 <TableCell align="right">
-                                    <AddShoppingCartIcon onClick={() => dispatch(addToCart(product.id))} />
+                                    <AddShoppingCartIcon onClick={() => dispatch(addToCart(product))} />
                                 </TableCell>
                             </TableRow>
                         ))}
