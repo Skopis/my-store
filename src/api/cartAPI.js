@@ -8,12 +8,18 @@ export const cartAPI = {
 
 
 async function getCart() {
-        console.log('getCart at Cart service')
-        const cartItems = await storageService.query('cartProducts')
-        return cartItems || []
+    console.log('getCart at Cart service')
+    const cartItems = await storageService.query('cartProducts')
+    console.log('cartItems at cart API getCart', cartItems)
+    return cartItems || []
 }
 
 async function addToCart(productId) {
+    var cartItems = await getCart()
+    console.log('cartItems at cart API addToCart before', cartItems)
+    cartItems.push({ productId, quantity: 1 })
+    console.log('cartItems at cart API addToCart after', cartItems)
+    storageService.saveToStorage('cartProducts', cartItems)
 
     return fetch(`https://fakestoreapi.com/carts/`, {
         method: "POST",

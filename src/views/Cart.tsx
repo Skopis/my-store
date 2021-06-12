@@ -1,19 +1,31 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getCart } from '../store/actions/index'
 
-interface Props {
-    text: string;
-}
 
-const Cart: React.FC<Props> = ({ text }) => {
+
+const Cart: React.FC = () => {
+    const dispatch = useDispatch()
+
+    const cartItems = useSelector((state: any) => state.cartItems)
+    useEffect(() => {
+        console.log('useEffect for Cart')
+        dispatch(getCart())
+    }, [])
+
     return (
         <Container fixed>
-            <div>Helo Cart</div>
-            text: {text}
-            {/* procuctList: {productList} */}
+            {cartItems && cartItems.length && <div>
+                <div>Hello Cart</div>
+                {cartItems.map((cartItem: any) => {
+                    return <div>Item ID: {cartItem.productId}</div>
+                })}
 
-            <Button variant="contained" color="primary">Check Out</Button>
+                <Button variant="contained" color="primary">Check Out</Button>
+            </div>}
 
         </Container>
     )

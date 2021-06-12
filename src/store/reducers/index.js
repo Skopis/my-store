@@ -11,7 +11,7 @@ export default combineReducers(
         productList: productListReducer,
         product: productReducer,
         categories: categoriesReducer,
-        cart: cartReducer,
+        cartItems: cartReducer,
         selectedCategory: categoryReducer,
         currentPageNum: pageNumReducer,
     }

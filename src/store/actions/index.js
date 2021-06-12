@@ -23,6 +23,15 @@ export const addToCart = (productId) => async (dispatch) => {
     catch (err) { console.log('Error with addToCart') }
 }
 
+export const getCart = () => async (dispatch) => {
+    console.log('hi addToCart on actions')
+    try {
+        const cartItems = await cartAPI.getCart()
+        dispatch({ type: 'GET_CART', payload: cartItems });
+    }
+    catch (err) { console.log('Error with addToCart') }
+}
+
 
 export const getCategories = () => async (dispatch) => {
     console.log('hi getCategories on actions')

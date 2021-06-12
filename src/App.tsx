@@ -12,13 +12,8 @@ function App() {
       <HashRouter>
         <AppHeader />
 
-        <Route path="/cart" >
-          <Cart text='hello' />
-        </Route>
-
-        <Route exact path="/" >
-          <ProductList />
-        </Route>
+        <Route component={Cart} path="/cart" />
+        <Route component={ProductList} exact path="/" />
 
       </HashRouter>
     </div>
