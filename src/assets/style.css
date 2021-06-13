@@ -59,7 +59,6 @@ body {
     position:fixed !important;
     top: 125px;
     left: calc(50vw - 225px);
-    z-index: 200000000;
 }
 
 .loader-animation {
@@ -67,16 +66,6 @@ body {
     margin: 0 auto;
     top: calc(50vh - 5px);
     left: calc(50vw - 5px);
-}
-
-.screen{
-    z-index: -1000000;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    opacity: 0.5;
 }
 
 .modal-btn-container{

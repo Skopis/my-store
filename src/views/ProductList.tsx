@@ -74,7 +74,6 @@ const ProductList: React.FC = () => {
 
     return (
         <Container className="main-content-container" fixed>
-            <div className="screen"></div>
             <Filter />
             {productForModal && productForModal.id && <ProductModal product={productForModal} />}
             {!productsForDisplay || productsForDisplay.length === 0 && <div className="loader-animation"><LoaderAnimation /></div>}
