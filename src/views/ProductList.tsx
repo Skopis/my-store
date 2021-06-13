@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 //actions
-import { getProductList, getCart, addToCart, setPageNum, getProductForModal} from '../store/actions/index'
+import { getProductList, getCart, addToCart, setPageNum, getProductForModal } from '../store/actions/index';
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -17,6 +17,7 @@ import Container from '@material-ui/core/Container';
 import BasicPagination from '../cmps/BasicPagination';
 import Filter from '../cmps/Filter';
 import ProductModal from '../cmps/ProductModal';
+import LoaderAnimation from '../cmps/LoaderAnimation';
 
 
 const useStyles = makeStyles({
@@ -41,7 +42,7 @@ const ProductList: React.FC = () => {
     const currentPageNum = useSelector((state: any) => state.currentPageNum)
 
     const productsPerPage = 5;
-    
+
     useEffect(() => {
         async function aFunc() {
             await dispatch(getProductList(selectedCategory))
@@ -49,7 +50,7 @@ const ProductList: React.FC = () => {
         }
         aFunc()
     }, [selectedCategory])
-    
+
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
     const productForModal = useSelector((state: any) => state.productForModal)
@@ -61,11 +62,11 @@ const ProductList: React.FC = () => {
         dispatch(getCart())
     }
 
-    const handleSort = async (sortBy:string) =>{
+    const handleSort = async (sortBy: string) => {
         dispatch(getProductList(selectedCategory, sortBy))
     }
 
-    const handleOpenProductModal = async (product: productObj) =>{
+    const handleOpenProductModal = async (product: productObj) => {
         console.log('product', product)
         dispatch(getProductForModal(product.id))
         console.log('productForModal', productForModal)
@@ -73,21 +74,23 @@ const ProductList: React.FC = () => {
 
     return (
         <Container className="main-content-container" fixed>
+            <div className="screen"></div>
             <Filter />
-            {productForModal &&  productForModal.id && <ProductModal product={productForModal}/>}
-            {productsForDisplay && productsForDisplay.length>0 && <TableContainer component={Paper}>
+            {productForModal && productForModal.id && <ProductModal product={productForModal} />}
+            {!productsForDisplay || productsForDisplay.length === 0 && <div className="loader-animation"><LoaderAnimation /></div>}
+            {productsForDisplay && productsForDisplay.length > 0 && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow className="table-header">
-                            <TableCell onClick={()=>handleSort('title')}>Product title</TableCell>
-                            <TableCell onClick={()=>handleSort('price')} align="right">Price ($)</TableCell>
+                            <TableCell onClick={() => handleSort('title')}>Product title</TableCell>
+                            <TableCell onClick={() => handleSort('price')} align="right">Price ($)</TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell align="right">Add to cart</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {productsForDisplay.map((product: productObj) => (
-                            <TableRow onClick={()=>handleOpenProductModal(product)} key={product.id} className="table-content">
+                            <TableRow onClick={() => handleOpenProductModal(product)} key={product.id} className="table-content">
                                 <TableCell component="th" scope="row">
                                     {product.title}
                                 </TableCell>

@@ -64,7 +64,7 @@ const Cart: React.FC = () => {
 
     isCheckOutDone = useSelector((state: any) => state.checkOut).isCheckOut;
     const invoiceTotalForMsg = useSelector((state: any) => state.checkOut).invoiceTotal.toFixed(2);
-    
+
     const handleCheckOut = async () => {
         await dispatch(checkOut(true, invoiceTotal))
         await dispatch(getCart())
@@ -72,8 +72,8 @@ const Cart: React.FC = () => {
 
     return (
         <Container fixed>
-            <Link to="/"><Button className="back-to-prod-list-btn" variant="contained" color="primary">Back to Products list</Button></Link>
-            {cartItems.length>0 &&
+            <Link to="/"><Button className="back-to-prod-list-btn" variant="contained" color="primary" onClick={() => dispatch(checkOut(false))}>Back to Products list</Button></Link>
+            {cartItems.length > 0 &&
                 <TableContainer className={classes.table} component={Paper}>
                     <Table aria-label="spanning table">
                         <TableHead>
@@ -112,7 +112,11 @@ const Cart: React.FC = () => {
                     </Table>
                     <Button className="btn btn-check-out" variant="contained" color="primary" onClick={() => handleCheckOut()}>Check Out</Button>
                 </TableContainer>}
-                {isCheckOutDone && <CheckOutMsg invoiceTotalForMsg={invoiceTotalForMsg} />}
+            {cartItems.length === 0 && !isCheckOutDone && <div className="no-cart-items-msg">
+                <h2>Nothing in your Cart yet</h2>
+                <p>Go back to product list and add some products!</p>
+            </div>}
+            {isCheckOutDone && <CheckOutMsg invoiceTotalForMsg={invoiceTotalForMsg} />}
         </Container>
     );
 }

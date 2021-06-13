@@ -10,15 +10,15 @@ import './assets/style.css'
 function App() {
 
   return (
-    <div className="App">
-      <HashRouter>
-        <AppHeader />
+      <div className="App">
+        <HashRouter>
+          <AppHeader />
 
-        <Route component={Cart} path="/cart" />
-        <Route component={ProductList} exact path="/" />
+          <Route component={Cart} path="/cart" />
+          <Route component={ProductList} exact path="/" />
 
-      </HashRouter>
-    </div>
+        </HashRouter>
+      </div>
   );
 }
 
