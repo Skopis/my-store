@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 //actions
-import { getProductList, getCart, addToCart } from '../store/actions/index'
+import { getProductList, getCart, addToCart, checkOut } from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -53,6 +53,7 @@ const ProductList: React.FC = () => {
     const handleAddToCart = async (product: productObj) => {
         await dispatch(addToCart(product))
         dispatch(getCart())
+        dispatch(checkOut(false))
     }
     return (
         <Container fixed>

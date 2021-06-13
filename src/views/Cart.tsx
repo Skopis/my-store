@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCart } from '../store/actions/index'
+import { getCart, checkOut } from '../store/actions/index'
 //cmps
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -40,19 +40,26 @@ interface CartItems {
 }
 
 function subtotal(items: CartItems[]) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+    if (items && items.length) return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
 const Cart: React.FC = () => {
+    var isCheckOutDone = false
     const dispatch = useDispatch()
     const cartItems = useSelector((state: any) => state.cartItems)
     useEffect(() => {
         dispatch(getCart())
     }, [])
-    const invoiceSubtotal = subtotal(cartItems);
+    const invoiceSubtotal = subtotal(cartItems) || 0;
     const invoiceTaxes = TAX_RATE * invoiceSubtotal;
     const invoiceTotal = invoiceTaxes + invoiceSubtotal;
     const classes = useStyles();
+    isCheckOutDone = useSelector((state: any) => state.checkOut).isCheckOut;
+    const invoiceTotalForMsg = useSelector((state: any) => state.checkOut).invoiceTotal.toFixed(2);
+    const handleCheckOut = async () => {
+        await dispatch(checkOut(true, invoiceTotal))
+        await dispatch(getCart())
+    }
 
     return (
         <Container fixed>
@@ -94,8 +101,14 @@ const Cart: React.FC = () => {
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <Button className="btn btn-check-out" variant="contained" color="primary">Check Out</Button>
+                    <Button className="btn btn-check-out" variant="contained" color="primary" onClick={() => handleCheckOut()}>Check Out</Button>
                 </TableContainer>}
+                {isCheckOutDone && (<div>
+                <p>Checkout completed successfully!</p>
+                <p>Payment of ${invoiceTotalForMsg} recieved</p>
+                <p>Your items are due to arrive within the next 7 business days</p>
+                </div>
+                )}
         </Container>
     );
 }

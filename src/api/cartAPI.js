@@ -3,7 +3,8 @@ import { storageService } from "../services/storage.service"
 export const cartAPI = {
     getCart,
     addToCart,
-    deleteCart
+    deleteCart,
+    checkOut
 }
 
 
@@ -34,13 +35,23 @@ async function addToCart(product) {
         })
 }
 
+async function checkOut(didCheckOut) {
+    if(!didCheckOut) return {isCheckOut: didCheckOut, emptyCart:[]}
+    var isCheckOut = false;
+    const emptyCart = await deleteCart()
+    console.log('checkout done!')
+    isCheckOut = true;
+    return { isCheckOut, emptyCart }
+}
+
 async function deleteCart() {
-    fetch('https://fakestoreapi.com/carts/6', {
+    storageService.saveToStorage('cartItems', [])
+    return fetch('https://fakestoreapi.com/carts/6', {
         method: "DELETE"
     })
         .then(res => res.json())
         .then(json => {
             console.log('deleteCart', json)
-            return json
+            return []
         })
 }

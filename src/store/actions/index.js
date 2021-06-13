@@ -1,6 +1,5 @@
 import { productAPI } from '../../api/productAPI'
 import { cartAPI } from '../../api/cartAPI'
-// import { storageService } from '../../services/storage.service';
 
 
 export const getProductList = (selectedCategory) => async (dispatch) => {
@@ -20,6 +19,7 @@ export const addToCart = (product) => async (dispatch) => {
     catch (err) { console.log('Error with addToCart') }
 }
 
+
 export const getCart = () => async (dispatch) => {
     try {
         const cartItems = await cartAPI.getCart()
@@ -32,14 +32,15 @@ export const getCart = () => async (dispatch) => {
 export const getCategories = () => async (dispatch) => {
     try {
         const categories = await productAPI.getCategories()
-        dispatch({ type: 'GET_CATEGORIES', payload: categories})
+        dispatch({ type: 'GET_CATEGORIES', payload: categories })
     }
     catch (err) { console.log('Error with getCategories') }
 }
 
+
 export const setCategory = (categoryName) => async (dispatch) => {
     try {
-        dispatch({ type: 'SET_CATEGORY', payload: categoryName})
+        dispatch({ type: 'SET_CATEGORY', payload: categoryName })
     }
     catch (err) { console.log('Error with setCategory') }
 }
@@ -47,7 +48,16 @@ export const setCategory = (categoryName) => async (dispatch) => {
 
 export const setPageNum = (pageNum) => async (dispatch) => {
     try {
-        dispatch({ type: 'SET_PAGE_NUM', payload: pageNum})
+        dispatch({ type: 'SET_PAGE_NUM', payload: pageNum })
     }
     catch (err) { console.log('Error with setPageNum') }
+}
+
+
+export const checkOut = (didCheckOut, invoiceTotal = 0) => async (dispatch) => {
+    try {
+        const { isCheckOut, emptyCart } = await cartAPI.checkOut(didCheckOut)
+        dispatch({ type: 'CHECK_OUT', payload: { isCheckOut, emptyCart, invoiceTotal } });
+    }
+    catch (err) { console.log('Error with checkOut') }
 }
