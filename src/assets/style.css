@@ -20,10 +20,11 @@ body {
 }
 .app-header{
     background-color: #A7B95E !important;
+    position:fixed !important;
 }
 
-.btn{
-    margin-top: 24px !important;
+.back-to-prod-list-btn{
+    margin-top: 88px !important;
 }
 
 .btn-check-out{
@@ -41,6 +42,32 @@ body {
 
 .cart-item-img{
     max-width: 150px; 
+}
+
+.modal-img{
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.modal-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    position:fixed !important;
+    top: 125px;
+    left: calc(50vw - 225px);
+}
+
+.modal-btn-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.main-content-container{
+    position: relative;
 }
 
 .add-to-cart-icon{
@@ -78,4 +105,8 @@ body {
     text-decoration: none;
     color: rgba(63, 81, 181. 0.1);
     font-weight: 600;
+}
+
+.close-modal-btn{
+    right: 0;
 }

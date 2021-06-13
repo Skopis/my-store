@@ -4,7 +4,8 @@ export const cartAPI = {
     getCart,
     addToCart,
     deleteCart,
-    checkOut
+    checkOut,
+    getProductById
 }
 
 
@@ -15,7 +16,7 @@ async function getCart() {
 
 async function addToCart(product) {
     var cartItems = await getCart()
-    if(!cartItems || !cartItems.length){
+    if (!cartItems || !cartItems.length) {
         product.qty = 1
         cartItems.push(product)
         await addNewItemToCart(product)
@@ -87,5 +88,15 @@ async function deleteCart() {
         .then(json => {
             console.log('deleteCart', json)
             return []
+        })
+}
+
+async function getProductById(productId) {
+    if (productId === null) return {}
+    return fetch(`https://fakestoreapi.com/products/${productId}`)
+        .then(res => res.json())
+        .then(json => {
+            console.log('getProductById', json)
+            return json
         })
 }

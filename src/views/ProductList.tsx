@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react';
 //actions
-import { getProductList, getCart, addToCart, setPageNum} from '../store/actions/index'
+import { getProductList, getCart, addToCart, setPageNum, getProductForModal} from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -17,6 +16,7 @@ import Container from '@material-ui/core/Container';
 //cmps
 import BasicPagination from '../cmps/BasicPagination';
 import Filter from '../cmps/Filter';
+import ProductModal from '../cmps/ProductModal';
 
 
 const useStyles = makeStyles({
@@ -41,22 +41,22 @@ const ProductList: React.FC = () => {
     const currentPageNum = useSelector((state: any) => state.currentPageNum)
 
     const productsPerPage = 5;
-
+    
     useEffect(() => {
-
-        async function anyNameFunction() {
+        async function aFunc() {
             await dispatch(getProductList(selectedCategory))
             await dispatch(setPageNum(0))
         }
-
-        anyNameFunction()
+        aFunc()
     }, [selectedCategory])
-
+    
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
+    const productForModal = useSelector((state: any) => state.productForModal)
     const classes = useStyles();
 
-    const handleAddToCart = async (product: productObj) => {
+    const handleAddToCart = async (product: productObj, ev: any) => {
+        ev.stopPropagation()
         await dispatch(addToCart(product))
         dispatch(getCart())
     }
@@ -65,9 +65,16 @@ const ProductList: React.FC = () => {
         dispatch(getProductList(selectedCategory, sortBy))
     }
 
+    const handleOpenProductModal = async (product: productObj) =>{
+        console.log('product', product)
+        dispatch(getProductForModal(product.id))
+        console.log('productForModal', productForModal)
+    }
+
     return (
-        <Container fixed>
+        <Container className="main-content-container" fixed>
             <Filter />
+            {productForModal &&  productForModal.id && <ProductModal product={productForModal}/>}
             {productsForDisplay && productsForDisplay.length>0 && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -80,14 +87,14 @@ const ProductList: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {productsForDisplay.map((product: productObj) => (
-                            <TableRow key={product.id} className="table-content">
+                            <TableRow onClick={()=>handleOpenProductModal(product)} key={product.id} className="table-content">
                                 <TableCell component="th" scope="row">
                                     {product.title}
                                 </TableCell>
                                 <TableCell align="center">{product.price}</TableCell>
                                 <TableCell align="center"><img className="product-img" src={product.image} alt="" /></TableCell>
                                 <TableCell align="center">
-                                    <AddShoppingCartIcon className="add-to-cart-icon" onClick={() => handleAddToCart(product)} />
+                                    <AddShoppingCartIcon className="add-to-cart-icon" onClick={(event) => handleAddToCart(product, event)} />
                                 </TableCell>
                             </TableRow>
                         ))}

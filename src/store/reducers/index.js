@@ -6,6 +6,7 @@ import productReducer from "./productReducer";
 import categoryReducer from './categoryReducer'
 import pageNumReducer from './pageNumReducer'
 import checkOutReducer from './checkOutReducer'
+import productForModalReducer from "./productForModalReducer";
 
 
 export default combineReducers(
@@ -16,6 +17,7 @@ export default combineReducers(
         cartItems: cartReducer,
         selectedCategory: categoryReducer,
         currentPageNum: pageNumReducer,
-        checkOut: checkOutReducer
+        checkOut: checkOutReducer,
+        productForModal: productForModalReducer
     }
 );

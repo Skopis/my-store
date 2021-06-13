@@ -15,7 +15,7 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         formControl: {
-            marginTop: theme.spacing(3),
+            marginTop: theme.spacing(9),
             marginBottom: theme.spacing(3),
             minWidth: 120,
             cursor: 'context-menu',

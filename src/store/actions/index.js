@@ -62,3 +62,12 @@ export const checkOut = (didCheckOut, invoiceTotal = 0) => async (dispatch) => {
     }
     catch (err) { console.log('Error with checkOut') }
 }
+
+
+export const getProductForModal = (productId) => async (dispatch) => {
+    try {
+        const productForModal = await cartAPI.getProductById(productId)
+        dispatch({ type: 'GET_PRODUCT_FOR_MODAL', payload: productForModal });
+    }
+    catch (err) { console.log('Error with checkOut') }
+} 

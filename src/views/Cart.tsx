@@ -72,7 +72,7 @@ const Cart: React.FC = () => {
 
     return (
         <Container fixed>
-            <Link to="/"><Button className="btn" variant="contained" color="primary">Back to Products list</Button></Link>
+            <Link to="/"><Button className="back-to-prod-list-btn" variant="contained" color="primary">Back to Products list</Button></Link>
             {cartItems.length>0 &&
                 <TableContainer className={classes.table} component={Paper}>
                     <Table aria-label="spanning table">
