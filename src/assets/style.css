@@ -3,15 +3,21 @@
     margin: 0;
     padding: 0;
     outline: 0;
+    font-family:Verdana, Geneva, Tahoma, sans-serif !important;
 }
 
 body {
+    
     background-color: rgb(233, 233, 233);
+    background-color: #ADC4D7;
 }
 
 .link, a {
     text-decoration: none;
     color: unset;
+}
+.app-header{
+    background-color: #A7B95E !important;
 }
 
 .btn{
@@ -37,4 +43,17 @@ body {
 
 .add-to-cart-icon{
     cursor: pointer;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.add-to-cart-icon:hover{
+    color: rgb(0, 0, 0);
+}
+
+.temp{
+    color: #F5F7F6;
+    color: #9A9F91;
+    color: #B46B66;
+    color: #C79047;
+    color: #494131;
 }

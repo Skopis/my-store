@@ -23,6 +23,8 @@ import Filter from '../cmps/Filter';
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
+        backgroundColor: '#F9F9F9',
+        fontFamily:'cursive',
     },
 });
 

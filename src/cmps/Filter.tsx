@@ -51,7 +51,7 @@ export default function SimpleSelect() {
                         <em>None</em>
                     </MenuItem>
                     {categories.map((category: string) => {
-                        return <MenuItem key={category} value={category}>{category} </MenuItem>
+                        return <MenuItem key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)} </MenuItem>
                     })}
 
                 </Select>
