@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCart, checkOut } from '../store/actions/index'
 //cmps
+import CheckOutMsg from '../cmps/CheckOutMsg'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -103,12 +104,7 @@ const Cart: React.FC = () => {
                     </Table>
                     <Button className="btn btn-check-out" variant="contained" color="primary" onClick={() => handleCheckOut()}>Check Out</Button>
                 </TableContainer>}
-                {isCheckOutDone && (<div>
-                <p>Checkout completed successfully!</p>
-                <p>Payment of ${invoiceTotalForMsg} recieved</p>
-                <p>Your items are due to arrive within the next 7 business days</p>
-                </div>
-                )}
+                {isCheckOutDone && <CheckOutMsg invoiceTotalForMsg={invoiceTotalForMsg} />}
         </Container>
     );
 }
