@@ -44,7 +44,7 @@ async function getCategories() {
     const categories = await storageService.query('categories')
 
     if (!categories || !categories.length) {
-        fetch('https://fakestoreapi.com/products/categories')
+        return fetch('https://fakestoreapi.com/products/categories')
             .then(res => res.json())
             .then(json => {
                 storageService.saveToStorage('categories', json)

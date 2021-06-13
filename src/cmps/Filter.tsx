@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SimpleSelect() {
     const dispatch = useDispatch();
+    const categories = useSelector((state: any) => state.categories)
     useEffect(() => {
         dispatch(getCategories())
     }, [])
-    const categories = useSelector((state: any) => state.categories)
     const selectedCategory = useSelector((state: any) => state.selectedCategory)
     const classes = useStyles();
 
@@ -41,9 +41,9 @@ export default function SimpleSelect() {
 
     return (
         <div>
-            {categories && categories.length && <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
-                <Select
+                {categories.length > 0 && <Select
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={selectedCategory}
@@ -56,9 +56,9 @@ export default function SimpleSelect() {
                         return <MenuItem key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)} </MenuItem>
                     })}
 
-                </Select>
+                </Select>}
                 <FormHelperText>Choose a Category you're interested in</FormHelperText>
-            </FormControl>}
+            </FormControl>
         </div>
     );
 }

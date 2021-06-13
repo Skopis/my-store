@@ -62,7 +62,7 @@ const ProductList: React.FC = () => {
     return (
         <Container fixed>
             <Filter />
-            {productsForDisplay && productsForDisplay.length && <TableContainer component={Paper}>
+            {productsForDisplay && productsForDisplay.length>0 && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow className="table-header">
