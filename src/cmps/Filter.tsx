@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 //actions
 import { getCategories, setCategory } from '../store/actions/index';
-//cmps
+//metirial-UI
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -29,9 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimpleSelect() {
     const dispatch = useDispatch();
     const categories = useSelector((state: any) => state.categories)
+    
     useEffect(() => {
         dispatch(getCategories())
     }, [])
+
     const selectedCategory = useSelector((state: any) => state.selectedCategory)
     const classes = useStyles();
 
@@ -55,7 +57,6 @@ export default function SimpleSelect() {
                     {categories.map((category: string) => {
                         return <MenuItem key={category} value={category}>{category.charAt(0).toUpperCase() + category.slice(1)} </MenuItem>
                     })}
-
                 </Select>}
                 <FormHelperText>Choose a Category you're interested in</FormHelperText>
             </FormControl>

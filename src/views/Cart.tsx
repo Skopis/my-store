@@ -2,9 +2,11 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+//actions
 import { getCart, checkOut } from '../store/actions/index'
 //cmps
 import CheckOutMsg from '../cmps/CheckOutMsg'
+//metirial-UI
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -49,15 +51,20 @@ const Cart: React.FC = () => {
     var isCheckOutDone = false
     const dispatch = useDispatch()
     const cartItems = useSelector((state: any) => state.cartItems)
+
     useEffect(() => {
         dispatch(getCart())
     }, [])
+
     const invoiceSubtotal = subtotal(cartItems) || 0;
     const invoiceTaxes = TAX_RATE * invoiceSubtotal;
     const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+
     const classes = useStyles();
+
     isCheckOutDone = useSelector((state: any) => state.checkOut).isCheckOut;
     const invoiceTotalForMsg = useSelector((state: any) => state.checkOut).invoiceTotal.toFixed(2);
+    
     const handleCheckOut = async () => {
         await dispatch(checkOut(true, invoiceTotal))
         await dispatch(getCart())

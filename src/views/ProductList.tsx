@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 //actions
-import { getProductList, getCart, addToCart, setPageNum } from '../store/actions/index'
+import { getProductList, getCart, addToCart, setPageNum} from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -19,14 +19,12 @@ import BasicPagination from '../cmps/BasicPagination';
 import Filter from '../cmps/Filter';
 
 
-
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
         backgroundColor: '#F9F9F9',
     },
 });
-
 interface productObj {
     id: number,
     title: string,
@@ -36,20 +34,24 @@ interface productObj {
     image: string
 }
 
-
 const ProductList: React.FC = () => {
     const dispatch = useDispatch()
+
     const selectedCategory = useSelector((state: any) => state.selectedCategory)
     const currentPageNum = useSelector((state: any) => state.currentPageNum)
+
     const productsPerPage = 5;
 
     useEffect(() => {
+
         async function anyNameFunction() {
             await dispatch(getProductList(selectedCategory))
             await dispatch(setPageNum(0))
         }
+
         anyNameFunction()
     }, [selectedCategory])
+
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
     const classes = useStyles();
@@ -59,6 +61,10 @@ const ProductList: React.FC = () => {
         dispatch(getCart())
     }
 
+    const handleSort = async (sortBy:string) =>{
+        dispatch(getProductList(selectedCategory, sortBy))
+    }
+
     return (
         <Container fixed>
             <Filter />
@@ -66,8 +72,8 @@ const ProductList: React.FC = () => {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow className="table-header">
-                            <TableCell >Product title</TableCell>
-                            <TableCell align="right">Price ($)</TableCell>
+                            <TableCell onClick={()=>handleSort('title')}>Product title</TableCell>
+                            <TableCell onClick={()=>handleSort('price')} align="right">Price ($)</TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell align="right">Add to cart</TableCell>
                         </TableRow>

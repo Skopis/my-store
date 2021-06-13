@@ -1,8 +1,10 @@
 import React from 'react';
+//metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+
 
 const useStyles = makeStyles({
     root: {
@@ -16,9 +18,11 @@ const useStyles = makeStyles({
         fontSize: 20,
     },
 });
+
 interface Props{
     invoiceTotalForMsg: number
 }
+
 const CheckOutMsg: React.FC<Props> = ({invoiceTotalForMsg}) =>{
     const classes = useStyles();
 

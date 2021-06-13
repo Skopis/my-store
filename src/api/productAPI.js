@@ -9,7 +9,7 @@ export const productAPI = {
 }
 
 
-async function query(selectedCategory = '') {
+async function query(selectedCategory = '', sortBy = '') {
     if (selectedCategory === '') {
         const productList = await storageService.query('productList')
 
@@ -23,13 +23,29 @@ async function query(selectedCategory = '') {
                 })
         }
         console.log('getting data from local storage')
-        return productList;
+        return sort(productList, sortBy);
     }
     else {
-        return queryByCategory(selectedCategory);
+        const itemsByCategory = await queryByCategory(selectedCategory)
+        return sort(itemsByCategory, sortBy);
     }
 }
 
+function sort(productList, sortBy) {
+    switch (sortBy) {
+        case 'title':
+            return productList.sort((a, b) => {
+                if (a.title > b.title) return 1
+                else if (a.title < b.title) return -1
+                else return 0
+            });
+        case 'price':
+            return productList.sort((a, b) => a.price - b.price);
+        default:
+            return productList;
+    }
+
+}
 
 function queryByCategory(category) {
     return fetch(`https://fakestoreapi.com/products/category/${category}`)

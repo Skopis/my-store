@@ -2,9 +2,9 @@ import { productAPI } from '../../api/productAPI'
 import { cartAPI } from '../../api/cartAPI'
 
 
-export const getProductList = (selectedCategory) => async (dispatch) => {
+export const getProductList = (selectedCategory, sortBy) => async (dispatch) => {
     try {
-        const res = await productAPI.query(selectedCategory);
+        const res = await productAPI.query(selectedCategory, sortBy);
         dispatch({ type: 'GET_PRODUCT_LIST', payload: res });
     }
     catch (err) { console.log('Error with getProductList') }
