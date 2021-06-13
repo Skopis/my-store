@@ -22,7 +22,6 @@ async function addToCart(product) {
         storageService.saveToStorage('cartItems', cartItems)
         return product
     }
-    console.log('product.id', product.id)
     var cartItem = cartItems.find(cartItem => cartItem.id === product.id)
     if (!cartItem) {
         product.qty = 1
@@ -32,10 +31,8 @@ async function addToCart(product) {
     else {
         product.qty = cartItem.qty + 1
         cartItem.qty++
-        console.log('cartItem.qty', cartItem.qty)
         await updateItemInCart(product)
     }
-    console.log('cartItems', cartItems)
     storageService.saveToStorage('cartItems', cartItems)
     return product
 }

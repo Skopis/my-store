@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 700,
             marginTop: theme.spacing(3),
             marginBottom: theme.spacing(3),
+            cursor: 'context-menu',
         },
     })
 );
@@ -89,16 +90,16 @@ const Cart: React.FC = () => {
                             <TableRow>
                                 <TableCell rowSpan={3} />
                                 <TableCell colSpan={2}>Subtotal</TableCell>
-                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                                <TableCell className="cart-price" align="right">${ccyFormat(invoiceSubtotal)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Tax</TableCell>
                                 <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+                                <TableCell className="cart-price" align="right">${ccyFormat(invoiceTaxes)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell colSpan={2}>Total</TableCell>
-                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                                <TableCell className="cart-price" align="right">${ccyFormat(invoiceTotal)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

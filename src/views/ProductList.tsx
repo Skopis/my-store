@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 //actions
-import { getProductList, getCart, addToCart } from '../store/actions/index'
+import { getProductList, getCart, addToCart, setPageNum } from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -45,6 +45,7 @@ const ProductList: React.FC = () => {
 
     useEffect(() => {
         dispatch(getProductList(selectedCategory))
+        dispatch(setPageNum(0))
     }, [selectedCategory])
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)

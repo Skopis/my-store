@@ -1,9 +1,10 @@
 
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPageNum } from '../store/actions/index'
+//cmps
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
-import { useDispatch } from 'react-redux';
-import { setPageNum } from '../store/actions/index'
 
 
 const useStyles = makeStyles((theme) =>
@@ -17,15 +18,13 @@ const useStyles = makeStyles((theme) =>
     }),
 );
 
-
 interface Props {
     productsLength: number;
 }
 
-
 const BasicPagination: React.FC<Props> = ({ productsLength }) => {
     const dispatch = useDispatch()
-    // event: React.MouseEvent<HTMLButtonElement> | null
+    const currentPageNum = useSelector((state: any) => state.currentPageNum)
     const handleChange = (event: any, newPageNum: number) => {
         dispatch(setPageNum(newPageNum - 1));
     };
@@ -33,7 +32,7 @@ const BasicPagination: React.FC<Props> = ({ productsLength }) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Pagination count={Math.ceil(productsLength / 5)} color="primary" onChange={handleChange} />
+            <Pagination page={currentPageNum + 1} count={Math.ceil(productsLength / 5)} color="primary" onChange={handleChange} />
         </div>
     );
 }

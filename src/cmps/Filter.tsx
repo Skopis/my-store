@@ -1,23 +1,24 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+//actions
+import { getCategories, setCategory } from '../store/actions/index';
+//cmps
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { getCategories } from '../store/actions/index';
-import { setCategory } from '../store/actions/index';
-import { useEffect } from 'react';
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         formControl: {
             marginTop: theme.spacing(3),
             marginBottom: theme.spacing(3),
-            // margin: theme.spacing(1),
             minWidth: 120,
-
+            cursor: 'context-menu',
         },
         selectEmpty: {
             marginTop: theme.spacing(2),

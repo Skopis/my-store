@@ -56,7 +56,6 @@ body {
 .add-to-cart-icon:hover >*{
     width: 100%;
 }
-
 .add-to-cart-icon:active{
     color: #A7B95E;
 }
@@ -64,7 +63,19 @@ body {
 .table-header>*{
     font-weight: 600 !important;
     color: rgb(61, 61, 61) !important;
+    cursor: context-menu;
 }
 .table-content>*{
     color: rgb(61, 61, 61) !important; 
+    cursor: context-menu;
+}
+
+.contact-link{
+    text-decoration: underline;
+    color: #3f51b5;
+}
+.contact-link:hover{
+    text-decoration: none;
+    color: rgba(63, 81, 181. 0.1);
+    font-weight: 600;
 }
