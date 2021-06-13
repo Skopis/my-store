@@ -81,6 +81,17 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    interface CartItems {
+        title: string,
+        image: string;
+        qty: number;
+        price: number;
+    }
+
+    const itemsInCartCount = ()=>{
+        return cartItems.reduce((sum:number, item: CartItems) => sum + item.qty, 0);
+    }
+    
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -112,7 +123,7 @@ export default function PrimarySearchAppBar() {
             <Link className="link" to="/cart">
                 <MenuItem>
                     <IconButton aria-label="show new notifications" color="inherit">
-                        <Badge badgeContent={cartItems.length} color="secondary">
+                        <Badge badgeContent={itemsInCartCount()} color="secondary">
                             <ShoppingCartIcon />
                         </Badge>
                     </IconButton>
@@ -152,7 +163,7 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Link className="link" to="/cart">
-                                <Badge badgeContent={cartItems.length} color="secondary">
+                                <Badge badgeContent={itemsInCartCount()} color="secondary">
                                     <ShoppingCartIcon />
                                 </Badge>
                             </Link>

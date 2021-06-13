@@ -41,7 +41,7 @@ interface CartItems {
 }
 
 function subtotal(items: CartItems[]) {
-    if (items && items.length) return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+    if (items && items.length) return items.map(({ price, qty }) => (price * qty)).reduce((sum, i) => sum + i, 0);
 }
 
 const Cart: React.FC = () => {
@@ -71,7 +71,7 @@ const Cart: React.FC = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Product title</TableCell>
-                                <TableCell>Price</TableCell>
+                                <TableCell>Price ($)</TableCell>
                                 <TableCell align="center">Image</TableCell>
                                 <TableCell>Qty.</TableCell>
                             </TableRow>
@@ -82,7 +82,7 @@ const Cart: React.FC = () => {
                                     <TableCell>{cartItem.title}</TableCell>
                                     <TableCell>{cartItem.price}</TableCell>
                                     <TableCell align="center"><img className="cart-item-img" src={cartItem.image} alt="" /></TableCell>
-                                    <TableCell>1</TableCell>
+                                    <TableCell>{cartItem.qty}</TableCell>
                                 </TableRow>
                             }
                             )}

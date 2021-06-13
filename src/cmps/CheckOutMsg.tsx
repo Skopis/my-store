@@ -9,7 +9,8 @@ const useStyles = makeStyles({
         maxWidth: 500,
         margin: '24px auto',
         textAlign: 'center',
-        padding: '20px'
+        padding: '20px',
+        backgroundColor: '#F9F9F9'
     },
     title: {
         fontSize: 20,

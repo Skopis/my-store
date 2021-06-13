@@ -12,6 +12,10 @@ body {
     background-color: #ADC4D7;
 }
 
+.category-field{
+    background-color: #F9F9F9 !important;
+}
+
 .link, a {
     text-decoration: none;
     color: unset;
@@ -48,12 +52,4 @@ body {
 
 .add-to-cart-icon:hover{
     color: rgb(0, 0, 0);
-}
-
-.temp{
-    color: #F5F7F6;
-    color: #9A9F91;
-    color: #B46B66;
-    color: #C79047;
-    color: #494131;
 }
