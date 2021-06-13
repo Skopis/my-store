@@ -34,3 +34,7 @@ body {
 .cart-item-img{
     max-width: 150px; 
 }
+
+.add-to-cart-icon{
+    cursor: pointer;
+}

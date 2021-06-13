@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 //actions
-import { getProductList } from '../store/actions/index'
-import { addToCart } from '../store/actions/index'
+import { getProductList, getCart, addToCart } from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -51,6 +50,10 @@ const ProductList: React.FC = () => {
 
     const classes = useStyles();
 
+    const handleAddToCart = async (product: productObj) => {
+        await dispatch(addToCart(product))
+        dispatch(getCart())
+    }
     return (
         <Container fixed>
             <Filter />
@@ -73,7 +76,7 @@ const ProductList: React.FC = () => {
                                 <TableCell align="center">{product.price}</TableCell>
                                 <TableCell align="center"><img className="product-img" src={product.image} alt="" /></TableCell>
                                 <TableCell align="center">
-                                    <AddShoppingCartIcon onClick={() => dispatch(addToCart(product))} />
+                                    <AddShoppingCartIcon className="add-to-cart-icon" onClick={() => handleAddToCart(product)} />
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function PrimarySearchAppBar() {
     const dispatch = useDispatch()
-    const cartItems = useSelector((state: any) => state.cartItems)
+    var cartItems = useSelector((state: any) => state.cartItems)
     useEffect(() => {
         dispatch(getCart())
     }, [])
