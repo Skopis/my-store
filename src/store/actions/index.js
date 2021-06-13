@@ -4,10 +4,8 @@ import { cartAPI } from '../../api/cartAPI'
 
 
 export const getProductList = (selectedCategory) => async (dispatch) => {
-    console.log('hi getProductList on actions')
     try {
         const res = await productAPI.query(selectedCategory);
-        console.log('res', res)
         dispatch({ type: 'GET_PRODUCT_LIST', payload: res });
     }
     catch (err) { console.log('Error with getProductList') }
@@ -15,7 +13,6 @@ export const getProductList = (selectedCategory) => async (dispatch) => {
 
 
 export const addToCart = (product) => async (dispatch) => {
-    console.log('hi addToCart on actions')
     try {
         const productAdded = await cartAPI.addToCart(product)
         dispatch({ type: 'ADD_TO_CART', payload: productAdded });
@@ -24,7 +21,6 @@ export const addToCart = (product) => async (dispatch) => {
 }
 
 export const getCart = () => async (dispatch) => {
-    console.log('hi addToCart on actions')
     try {
         const cartItems = await cartAPI.getCart()
         dispatch({ type: 'GET_CART', payload: cartItems });
@@ -34,7 +30,6 @@ export const getCart = () => async (dispatch) => {
 
 
 export const getCategories = () => async (dispatch) => {
-    console.log('hi getCategories on actions')
     try {
         const categories = await productAPI.getCategories()
         dispatch({ type: 'GET_CATEGORIES', payload: categories})
@@ -43,7 +38,6 @@ export const getCategories = () => async (dispatch) => {
 }
 
 export const setCategory = (categoryName) => async (dispatch) => {
-    console.log('hi setCategory on actions')
     try {
         dispatch({ type: 'SET_CATEGORY', payload: categoryName})
     }
@@ -52,7 +46,6 @@ export const setCategory = (categoryName) => async (dispatch) => {
 
 
 export const setPageNum = (pageNum) => async (dispatch) => {
-    console.log('hi setPageNum on actions')
     try {
         dispatch({ type: 'SET_PAGE_NUM', payload: pageNum})
     }

@@ -27,21 +27,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimpleSelect() {
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('useEffect for App')
         dispatch(getCategories())
     }, [])
     const categories = useSelector((state: any) => state.categories)
     const selectedCategory = useSelector((state: any) => state.selectedCategory)
     const classes = useStyles();
-    // const [category, setCategory] = React.useState('');
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        console.log('event.target.value', event.target.value)
         dispatch(setCategory(event.target.value as string))
-        // setCategory(event.target.value as string);
     };
-    // console.log('categories', categories)
-
 
     return (
         <div>

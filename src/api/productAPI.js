@@ -9,22 +9,20 @@ export const productAPI = {
 }
 
 
-async function query(selectedCategory = 'none') {
-    if (selectedCategory === 'none') {
-        console.log('selectedCategory at API service', selectedCategory)
+async function query(selectedCategory = '') {
+    if (selectedCategory === '') {
         const productList = await storageService.query('productList')
 
         if (!productList || !productList.length) {
-            console.log('getting from API')
+            console.log('getting data from API')
             return fetch('https://fakestoreapi.com/products')
                 .then(res => res.json())
                 .then(json => {
-                    // console.log('query() on productAPI', json)
                     storageService.saveToStorage('productList', json)
                     return json
                 })
         }
-        console.log('getting from local storage')
+        console.log('getting data from local storage')
         return productList;
     }
     else {
@@ -37,7 +35,6 @@ function queryByCategory(category) {
     return fetch(`https://fakestoreapi.com/products/category/${category}`)
         .then(res => res.json())
         .then(json => {
-            console.log(`queryByCategory ${category}`, json)
             return json
         })
 }
@@ -50,7 +47,6 @@ async function getCategories() {
         fetch('https://fakestoreapi.com/products/categories')
             .then(res => res.json())
             .then(json => {
-                // console.log('getCategories', json)
                 storageService.saveToStorage('categories', json)
                 return json
             })

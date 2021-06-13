@@ -1,11 +1,12 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getCart } from '../store/actions/index'
 //cmps
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
         table: {
             minWidth: 700,
             marginTop: theme.spacing(3),
+            marginBottom: theme.spacing(3),
         },
     })
 );
@@ -30,16 +32,8 @@ function ccyFormat(num: number) {
     return `${num.toFixed(2)}`;
 }
 
-function priceRow(qty: number, price: number) {
-    return qty * price;
-}
-
-function createRow(image: string, qty: number, price: number) {
-    const Totalprice = priceRow(qty, price);
-    return { image, qty, price: Totalprice };
-}
-
 interface CartItems {
+    title: string,
     image: string;
     qty: number;
     price: number;
@@ -49,27 +43,20 @@ function subtotal(items: CartItems[]) {
     return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-const rows = [
-    createRow('Paperclips (Box)', 100, 1.15),
-    createRow('Paper (Case)', 10, 45.99),
-    createRow('Waste Basket', 2, 17.99),
-];
-
 const Cart: React.FC = () => {
     const dispatch = useDispatch()
-    
     const cartItems = useSelector((state: any) => state.cartItems)
     useEffect(() => {
-        console.log('useEffect for Cart')
         dispatch(getCart())
     }, [])
     const invoiceSubtotal = subtotal(cartItems);
     const invoiceTaxes = TAX_RATE * invoiceSubtotal;
     const invoiceTotal = invoiceTaxes + invoiceSubtotal;
     const classes = useStyles();
-    console.log('cartItems at cart', cartItems)
+
     return (
         <Container fixed>
+            <Link to="/"><Button className="btn" variant="contained" color="primary">Back to Products list</Button></Link>
             {cartItems && cartItems.length &&
                 <TableContainer className={classes.table} component={Paper}>
                     <Table aria-label="spanning table">
@@ -94,159 +81,23 @@ const Cart: React.FC = () => {
                             <TableRow>
                                 <TableCell rowSpan={3} />
                                 <TableCell colSpan={2}>Subtotal</TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Tax</TableCell>
                                 <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceTaxes)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell colSpan={2}>Total</TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                                <TableCell className="cart-price" align="right">{ccyFormat(invoiceTotal)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <Button variant="contained" color="primary">Check Out</Button>
+                    <Button className="btn btn-check-out" variant="contained" color="primary">Check Out</Button>
                 </TableContainer>}
         </Container>
     );
 }
 
 export default Cart;
-
-
-////////////////////////////////////////////////////////////////////////////////////
-
-
-
-// const Cart: React.FC = () => {
-//     const dispatch = useDispatch()
-
-//     const cartItems = useSelector((state: any) => state.cartItems)
-//     useEffect(() => {
-//         console.log('useEffect for Cart')
-//         dispatch(getCart())
-//     }, [])
-
-//     return (
-//         <Container fixed>
-//             {cartItems && cartItems.length && <div>
-//                 <div>Hello Cart</div>
-//                 {cartItems.map((cartItem: any) => {
-//                     return <TableContainer component={Paper}>
-//                     </TableContainer>
-//                 })}
-
-//                 <Button variant="contained" color="primary">Check Out</Button>
-//             </div>}
-
-//         </Container>
-//     )
-// }
-
-// export default Cart
-
-//////////////////////////////////////////////////////////////
-//will use later the code below:
-
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableContainer from '@material-ui/core/TableContainer';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
-// import Paper from '@material-ui/core/Paper';
-
-// const TAX_RATE = 0.07;
-
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 700,
-//   },
-// });
-
-// function ccyFormat(num: number) {
-//   return `${num.toFixed(2)}`;
-// }
-
-// function priceRow(qty: number, unit: number) {
-//   return qty * unit;
-// }
-
-// function createRow(desc: string, qty: number, unit: number) {
-//   const price = priceRow(qty, unit);
-//   return { desc, qty, unit, price };
-// }
-
-// interface Row {
-//   desc: string;
-//   qty: number;
-//   unit: number;
-//   price: number;
-// }
-
-// function subtotal(items: Row[]) {
-//   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-// }
-
-// const rows = [
-//   createRow('Paperclips (Box)', 100, 1.15),
-//   createRow('Paper (Case)', 10, 45.99),
-//   createRow('Waste Basket', 2, 17.99),
-// ];
-
-// const invoiceSubtotal = subtotal(rows);
-// const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-// const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-// export default function SpanningTable() {
-//   const classes = useStyles();
-
-//   return (
-//     <TableContainer component={Paper}>
-//       <Table className={classes.table} aria-label="spanning table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell align="center" colSpan={3}>
-//               Details
-//             </TableCell>
-//             <TableCell align="right">Price</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell>Desc</TableCell>
-//             <TableCell align="right">Qty.</TableCell>
-//             <TableCell align="right">Unit</TableCell>
-//             <TableCell align="right">Sum</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {rows.map((row) => (
-//             <TableRow key={row.desc}>
-//               <TableCell>{row.desc}</TableCell>
-//               <TableCell align="right">{row.qty}</TableCell>
-//               <TableCell align="right">{row.unit}</TableCell>
-//               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-//             </TableRow>
-//           ))}
-//           <TableRow>
-//             <TableCell rowSpan={3} />
-//             <TableCell colSpan={2}>Subtotal</TableCell>
-//             <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell>Tax</TableCell>
-//             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-//             <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell colSpan={2}>Total</TableCell>
-//             <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-//           </TableRow>
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-//   );
-// }

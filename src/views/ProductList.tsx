@@ -27,7 +27,6 @@ const useStyles = makeStyles({
     },
 });
 
-
 interface productObj {
     id: number,
     title: string,
@@ -45,15 +44,13 @@ const ProductList: React.FC = () => {
     const productsPerPage = 5;
 
     useEffect(() => {
-        console.log('useEffect for App')
         dispatch(getProductList(selectedCategory))
     }, [selectedCategory])
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
 
-    // console.log('selectedCategory at ProductList', selectedCategory)
-    console.log('products', products)
     const classes = useStyles();
+
     return (
         <Container fixed>
             <Filter />
@@ -63,7 +60,7 @@ const ProductList: React.FC = () => {
                         <TableRow>
                             <TableCell>Product title</TableCell>
                             <TableCell align="right">Price ($)</TableCell>
-                            <TableCell align="right">Image</TableCell>
+                            <TableCell align="center">Image</TableCell>
                             <TableCell align="right">Add to cart</TableCell>
                         </TableRow>
                     </TableHead>
@@ -73,9 +70,9 @@ const ProductList: React.FC = () => {
                                 <TableCell component="th" scope="row">
                                     {product.title}
                                 </TableCell>
-                                <TableCell align="right">{product.price}</TableCell>
-                                <TableCell align="right"><img className="product-img" src={product.image} alt="" /></TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">{product.price}</TableCell>
+                                <TableCell align="center"><img className="product-img" src={product.image} alt="" /></TableCell>
+                                <TableCell align="center">
                                     <AddShoppingCartIcon onClick={() => dispatch(addToCart(product))} />
                                 </TableCell>
                             </TableRow>

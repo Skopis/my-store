@@ -26,11 +26,9 @@ const BasicPagination: React.FC<Props> = ({ productsLength }) => {
     const dispatch = useDispatch()
     // event: React.MouseEvent<HTMLButtonElement> | null
     const handleChange = (event: any, newPageNum: number) => {
-        console.log(newPageNum, 'newPageNum')
         dispatch(setPageNum(newPageNum - 1));
     };
 
-    console.log('productsLength', productsLength)
     const classes = useStyles();
     return (
         <div className={classes.root}>
