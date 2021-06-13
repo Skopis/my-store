@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { getCart } from '../store/actions/index'
+import { getCart, checkOut } from '../store/actions/index'
 //cmps
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -91,7 +91,7 @@ export default function PrimarySearchAppBar() {
     const itemsInCartCount = ()=>{
         return cartItems.reduce((sum:number, item: CartItems) => sum + item.qty, 0);
     }
-    
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -157,7 +157,7 @@ export default function PrimarySearchAppBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        <Link to="/">Products</Link>
+                        <Link to="/" onClick={()=>dispatch(checkOut(false))}>Products</Link>
                     </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>

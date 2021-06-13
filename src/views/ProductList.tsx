@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
 //actions
-import { getProductList, getCart, addToCart, checkOut } from '../store/actions/index'
+import { getProductList, getCart, addToCart } from '../store/actions/index'
 //metirial-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
         backgroundColor: '#F9F9F9',
-        fontFamily:'cursive',
     },
 });
 
@@ -49,22 +48,21 @@ const ProductList: React.FC = () => {
     }, [selectedCategory])
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
-
     const classes = useStyles();
 
     const handleAddToCart = async (product: productObj) => {
         await dispatch(addToCart(product))
         dispatch(getCart())
-        dispatch(checkOut(false))
     }
+
     return (
         <Container fixed>
             <Filter />
             {productsForDisplay && productsForDisplay.length && <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
-                            <TableCell>Product title</TableCell>
+                        <TableRow className="table-header">
+                            <TableCell >Product title</TableCell>
                             <TableCell align="right">Price ($)</TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell align="right">Add to cart</TableCell>
@@ -72,7 +70,7 @@ const ProductList: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {productsForDisplay.map((product: productObj) => (
-                            <TableRow key={product.id}>
+                            <TableRow key={product.id} className="table-content">
                                 <TableCell component="th" scope="row">
                                     {product.title}
                                 </TableCell>

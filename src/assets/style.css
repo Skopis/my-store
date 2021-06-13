@@ -7,8 +7,6 @@
 }
 
 body {
-    
-    background-color: rgb(233, 233, 233);
     background-color: #ADC4D7;
 }
 
@@ -49,7 +47,24 @@ body {
     cursor: pointer;
     color: rgba(0, 0, 0, 0.54);
 }
-
 .add-to-cart-icon:hover{
-    color: rgb(0, 0, 0);
+    color: #3f51b5;
+    width: 30px;
+    height: 30px;
+    transition: 0.3s;
+}
+.add-to-cart-icon:hover >*{
+    width: 100%;
+}
+
+.add-to-cart-icon:active{
+    color: #A7B95E;
+}
+
+.table-header>*{
+    font-weight: 600 !important;
+    color: rgb(61, 61, 61) !important;
+}
+.table-content>*{
+    color: rgb(61, 61, 61) !important; 
 }
