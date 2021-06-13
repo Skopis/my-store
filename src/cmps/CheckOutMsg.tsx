@@ -38,7 +38,7 @@ const CheckOutMsg: React.FC<Props> = ({invoiceTotalForMsg}) =>{
                 <Typography variant="body2" component="pre" style={{marginTop: '16px'}}>
                 <p>Your items are due to arrive within the next 7 business days</p>
                 <p>Feel free to contact us for any questions or issues At:</p>
-                <a className="contact-link" href="my-store@react.redux">my-store@react.redux</a>
+                <a className="contact-link" href="">my-store@react.redux</a>
                 </Typography>
             </CardContent>
         </Card>
