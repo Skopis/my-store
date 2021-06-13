@@ -44,8 +44,11 @@ const ProductList: React.FC = () => {
     const productsPerPage = 5;
 
     useEffect(() => {
-        dispatch(getProductList(selectedCategory))
-        dispatch(setPageNum(0))
+        async function anyNameFunction() {
+            await dispatch(getProductList(selectedCategory))
+            await dispatch(setPageNum(0))
+        }
+        anyNameFunction()
     }, [selectedCategory])
     const products = useSelector((state: any) => state.productList)
     const productsForDisplay = products.slice(currentPageNum * productsPerPage, currentPageNum * productsPerPage + productsPerPage)
