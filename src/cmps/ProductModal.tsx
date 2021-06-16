@@ -45,7 +45,9 @@ const ProductModal: React.FC<Props> = ({ product }) => {
 
     return (
         <Card className="modal-card">
-            <img className="modal-img" src={product.image} alt="" />
+            <div className="modal-img-container">
+                <img className="modal-img" src={product.image} alt="" />
+            </div>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                     {product.title}
@@ -56,7 +58,7 @@ const ProductModal: React.FC<Props> = ({ product }) => {
             </CardContent>
 
             <CardActions className="modal-btn-container">
-                <Button size="small" color="primary"  onClick={() => onAddToCart()}>
+                <Button size="small" color="primary" onClick={() => onAddToCart()}>
                     Add to Cart
                 </Button>
                 <Button className="close-modal-btn" size="small" color="primary" onClick={() => onCloseModal()}>
